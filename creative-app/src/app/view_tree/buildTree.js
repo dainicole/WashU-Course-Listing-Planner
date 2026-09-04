@@ -33,7 +33,7 @@ export function buildDagForRoot(allCourses, relationField, rootId) {
         const node = courseMap.get(id);
         return {
             id: node.id,
-            parentIds: (node[relationField] || []).filter(p => visited.has(p))
+            parentIds: (node[relationField] || []).filter(p => p !== node.id && visited.has(p))
         };
     });
 
@@ -50,7 +50,7 @@ export function buildDagForAllCourses(allCourses, relationField = "postreq_list"
     courseMap.forEach(node => {
         dagData.push({
             id: node.id,
-            parentIds: (node[relationField] || []).filter(parentId => courseMap.has(parentId))
+            parentIds: (node[relationField] || []).filter(parentId => parentId !== node.id && courseMap.has(parentId))
         });
     });
 

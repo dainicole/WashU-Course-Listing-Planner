@@ -1,5 +1,7 @@
 # TODO add bs4 into our download list           pip install beautifulsoup4
 from bs4 import BeautifulSoup
+import os
+from pathlib import Path
 import re
 from dataclasses import dataclass, asdict
 from typing import Optional
@@ -15,10 +17,11 @@ COURSE_TITLE_CLASS = "scpi-class__heading wide"
 COURSE_DEPARTMENT_CLASS = "scpi-class__department"
 COURSE_DESCRIPTION_CLASS = "scpi-class__details--content"
 
-#constants for database
-URI = "neo4j://localhost:7687"
-AUTH = ("neo4j", "12345678") # TODO change if make other instance
-DATABASE_NAME = "CoursePrereqDB"
+# constants for database
+URI = os.getenv("NEO4J_URI", "neo4j://localhost:7687")
+USERNAME = os.getenv("NEO4J_USERNAME", "neo4j")
+PASSWORD = os.getenv("NEO4J_PASSWORD", "12345678")
+DATABASE_NAME = os.getenv("NEO4J_DATABASE", "CoursePrereqDB")
 
 # other constants
 PLACEHOLDER = "PLACEHOLDER" # for if there's not a valid short course id to parse
@@ -154,7 +157,7 @@ def upload_to_db(data):
         RETURN c.id
         """
 
-    with GraphDatabase.driver(URI, auth=AUTH) as driver:
+    with GraphDatabase.driver(URI, auth=(USERNAME, PASSWORD)) as driver:
         driver.verify_connectivity()
         print("Connected to Neo4j successfully!")
 
@@ -178,7 +181,7 @@ def create_prerequisite_relationships(data):
 
         MERGE (p)-[:IS_REQUIRED_BY]->(c)
         """
-    with GraphDatabase.driver(URI, auth=AUTH) as driver:
+    with GraphDatabase.driver(URI, auth=(USERNAME, PASSWORD)) as driver:
         # Execute the prerequisite query
         summary = driver.execute_query(
             CYPHER_PREREQ_QUERY,
@@ -196,7 +199,8 @@ def create_prerequisite_relationships(data):
 def main():
     print("running code")
     # open html file (I downloaded the page for easier testing, will change later)
-    with open("C:/Users/aylab/cse330/creative_project/python_web_scraper/SP26_11.12.html", "r", encoding="utf-8") as f:
+    html_path = Path(__file__).with_name("SP26_11.12.html")
+    with html_path.open("r", encoding="utf-8") as f:
         html_content = f.read()
     soup = BeautifulSoup(html_content, 'html.parser')
     course_wrappers = soup.find_all('div', class_ = COURSE_WRAPPER_CLASS)
