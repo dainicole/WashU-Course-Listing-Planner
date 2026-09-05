@@ -3,7 +3,7 @@
 Course Listing Planner is a WashU computer science course planner. It helps students decide which courses to prioritize by showing prerequisite and postrequisite relationships. For example, a student interested in CSE 417 can see that it may require Matrix Algebra, which may itself require calculus. Students can also see which later courses depend on a course such as CSE 361.
 
 ## Live Application
-[https://course-listing-planner-qbvehq5vt-nicole-1bf4.vercel.app/](https://course-listing-planner-74ctulpko-nicole-1bf4.vercel.app/)
+[[[https://course-listing-planner-qbvehq5vt-nicole-1bf4.vercel.app/](https://course-listing-planner-74ctulpko-nicole-1bf4.vercel.app/)](https://course-listing-planner-alpha.vercel.app/)](https://course-listing-planner-alpha.vercel.app/)
 
 ## Features
 
