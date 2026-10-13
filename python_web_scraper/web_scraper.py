@@ -18,10 +18,10 @@ COURSE_DEPARTMENT_CLASS = "scpi-class__department"
 COURSE_DESCRIPTION_CLASS = "scpi-class__details--content"
 
 # constants for database
-URI = os.getenv("NEO4J_URI", "neo4j://localhost:7687")
-USERNAME = os.getenv("NEO4J_USERNAME", "neo4j")
-PASSWORD = os.getenv("NEO4J_PASSWORD", "12345678")
-DATABASE_NAME = os.getenv("NEO4J_DATABASE", "CoursePrereqDB")
+URI = os.getenv("NEO4J_URI")
+USERNAME = os.getenv("NEO4J_USERNAME")
+PASSWORD = os.getenv("NEO4J_PASSWORD")
+DATABASE_NAME = os.getenv("NEO4J_DATABASE", "Database")
 
 # other constants
 PLACEHOLDER = "PLACEHOLDER" # for if there's not a valid short course id to parse
